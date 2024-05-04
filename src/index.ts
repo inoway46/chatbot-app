@@ -14,6 +14,7 @@ const env = load({
   CHANNEL_SECRET: String,
   PORT: Number,
 });
+import { PrismaClient } from '@prisma/client';
 
 const PORT = env.PORT || 3000;
 
@@ -26,6 +27,8 @@ const middlewareConfig: MiddlewareConfig = config;
 const client = new Client(clientConfig);
 
 const app: Application = express();
+
+const prisma = new PrismaClient();
 
 app.get('/', async (_: Request, res: Response): Promise<Response> => {
   return res.status(200).send({
@@ -40,6 +43,11 @@ const textEventHandler = async (
     return;
   }
 
+  const userId = event.source.userId;
+  if (userId !== undefined) {
+    createUser(userId);
+  }
+
   const { replyToken } = event;
   const { text } = event.message;
   const response: TextMessage = {
@@ -48,6 +56,18 @@ const textEventHandler = async (
   };
   await client.replyMessage(replyToken, response);
 };
+
+const createUser = async (userId: string): Promise<void> => {
+  const displayName = (await client.getProfile(userId))?.displayName;
+  await prisma.user.upsert({
+    where: { lineId: userId },
+    update: {},
+    create: {
+      lineId: userId,
+      name: displayName || 'unknown',
+    },
+  });
+}
 
 app.post(
   '/webhook',
