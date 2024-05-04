@@ -1,11 +1,11 @@
 import {
   ClientConfig,
-  Client,
   middleware,
   MiddlewareConfig,
   WebhookEvent,
   TextMessage,
   MessageAPIResponseBase,
+  messagingApi,
 } from '@line/bot-sdk';
 import express, { Application, Request, Response } from 'express';
 import { load } from 'ts-dotenv';
@@ -18,13 +18,16 @@ import { PrismaClient, User } from '@prisma/client';
 
 const PORT = env.PORT || 3000;
 
-const config = {
+const clientConfig: ClientConfig = {
+  channelAccessToken: env.CHANNEL_ACCESS_TOKEN || '',
+};
+
+const middlewareConfig: MiddlewareConfig = {
   channelAccessToken: env.CHANNEL_ACCESS_TOKEN || '',
   channelSecret: env.CHANNEL_SECRET || '',
 };
-const clientConfig: ClientConfig = config;
-const middlewareConfig: MiddlewareConfig = config;
-const client = new Client(clientConfig);
+
+const client = new messagingApi.MessagingApiClient(clientConfig);
 
 const app: Application = express();
 
@@ -51,18 +54,17 @@ const textEventHandler = async (
 
   const user = await createUser(lineId);
 
-  const { replyToken } = event;
   const { text } = event.message;
-
   await createMessage(user.id, text, true);
 
   const responseText = `「${text}」ですね。`;
-  const response: TextMessage = {
-    type: 'text',
-    text: responseText,
-  };
-  await client.replyMessage(replyToken, response);
-
+  await client.replyMessage({
+    replyToken: event.replyToken as string,
+    messages: [{
+      type: 'text',
+      text: responseText,
+    }],
+  });
   await createMessage(user.id, responseText, false);
 };
 
