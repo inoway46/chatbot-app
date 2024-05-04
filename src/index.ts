@@ -14,7 +14,7 @@ const env = load({
   CHANNEL_SECRET: String,
   PORT: Number,
 });
-import { PrismaClient } from '@prisma/client';
+import { PrismaClient, User } from '@prisma/client';
 
 const PORT = env.PORT || 3000;
 
@@ -43,28 +43,49 @@ const textEventHandler = async (
     return;
   }
 
-  const userId = event.source.userId;
-  if (userId !== undefined) {
-    createUser(userId);
+  const lineId = event.source.userId;
+  if (lineId === undefined) {
+    console.error('lineId is undefined');
+    return;
   }
+
+  const user = await createUser(lineId);
 
   const { replyToken } = event;
   const { text } = event.message;
+
+  await createMessage(user.id, text, true);
+
+  const responseText = `「${text}」ですね。`;
   const response: TextMessage = {
     type: 'text',
-    text: text,
+    text: responseText,
   };
   await client.replyMessage(replyToken, response);
+
+  await createMessage(user.id, responseText, false);
 };
 
-const createUser = async (userId: string): Promise<void> => {
-  const displayName = (await client.getProfile(userId))?.displayName;
-  await prisma.user.upsert({
-    where: { lineId: userId },
+const createUser = async (lineId: string): Promise<User> => {
+  const displayName = (await client.getProfile(lineId))?.displayName;
+  const user = await prisma.user.upsert({
+    where: { lineId: lineId },
     update: {},
     create: {
-      lineId: userId,
+      lineId: lineId,
       name: displayName || 'unknown',
+    },
+  });
+
+  return user;
+};
+
+const createMessage = async (userId: number, text: string, isFromUser: boolean): Promise<void> => {
+  await prisma.message.create({
+    data: {
+      userId: userId,
+      content: text,
+      isFromUser: isFromUser,
     },
   });
 }
