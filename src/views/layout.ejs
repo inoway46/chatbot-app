@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=0.8, maximum-scale=1"
+    />
+    <title>Express</title>
+    <link rel="stylesheet" href="/public/css/bootstrap.css" />
+  </head>
+
+  <body>
+    <header>
+      <div id="nav">
+        <div class="col-sm nav-align">
+          <h1 id="title">お部屋探し管理</h1>
+        </div>
+        <div class="col-sm nav-align">
+          <a href="/">
+            <span class="button">Home</span>
+          </a>
+          <a href="/users">
+            <span class="button">ユーザー一覧</span>
+          </a>
+        </div>
+      </div>
+    </header>
+
+    <div class="container"><%- body %></div>
+
+    <footer>©️お部屋探しサービス</footer>
+  </body>
+</html>

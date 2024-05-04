@@ -3,11 +3,12 @@ import {
   middleware,
   MiddlewareConfig,
   WebhookEvent,
-  TextMessage,
   MessageAPIResponseBase,
   messagingApi,
 } from '@line/bot-sdk';
 import express, { Application, Request, Response } from 'express';
+import router from './routes';
+import layouts from 'express-ejs-layouts';
 import { load } from 'ts-dotenv';
 const env = load({
   CHANNEL_ACCESS_TOKEN: String,
@@ -28,15 +29,17 @@ const middlewareConfig: MiddlewareConfig = {
 };
 
 const client = new messagingApi.MessagingApiClient(clientConfig);
+const prisma = new PrismaClient();
 
 const app: Application = express();
 
-const prisma = new PrismaClient();
-
-app.get('/', async (_: Request, res: Response): Promise<Response> => {
-  return res.status(200).send({
-    message: 'success',
-  });
+app.set("view engine", "ejs");
+app.set('views', './src/views')
+app.use(layouts)
+app.use('/public', express.static('src/public'))
+app.use('/', router)
+app.listen(PORT, () => {
+  console.log(`server start. port:${PORT}`);
 });
 
 const textEventHandler = async (
@@ -112,7 +115,3 @@ app.post(
     return res.status(200);
   }
 );
-
-app.listen(PORT, () => {
-  console.log(`listening port:${PORT}`);
-});
