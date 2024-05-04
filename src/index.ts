@@ -23,17 +23,17 @@ const config = {
 };
 const clientConfig: ClientConfig = config;
 const middlewareConfig: MiddlewareConfig = config;
-const client = new Client(clientConfig); //①
+const client = new Client(clientConfig);
 
-const app: Application = express(); //②
+const app: Application = express();
 
-app.get('/', async (_: Request, res: Response): Promise<Response> => { //③
+app.get('/', async (_: Request, res: Response): Promise<Response> => {
   return res.status(200).send({
     message: 'success',
   });
 });
 
-const textEventHandler = async ( //④
+const textEventHandler = async (
   event: WebhookEvent
 ): Promise<MessageAPIResponseBase | undefined> => {
   if (event.type !== 'message' || event.message.type !== 'text') {
@@ -49,7 +49,7 @@ const textEventHandler = async ( //④
   await client.replyMessage(replyToken, response);
 };
 
-app.post( //⑤
+app.post(
   '/webhook',
   middleware(middlewareConfig),
   async (req: Request, res: Response): Promise<Response> => {
@@ -70,6 +70,6 @@ app.post( //⑤
   }
 );
 
-app.listen(PORT, () => { //⑥
-  console.log(`http://localhost:${PORT}/`);
+app.listen(PORT, () => {
+  console.log(`listening port:${PORT}`);
 });
