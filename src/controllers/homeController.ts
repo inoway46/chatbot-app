@@ -1,7 +1,7 @@
-import express from "express";
+import { Request, Response } from "express";
 
 export default {
-  index: (req: express.Request, res: express.Response) => {
+  index: (req: Request, res: Response) => {
     res.render("index");
   },
 };
