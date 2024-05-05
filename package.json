@@ -6,7 +6,8 @@
   "scripts": {
     "start": "ts-node src/server.ts",
     "start:dev": "nodemon --exec ts-node src/server.ts",
-    "test": "jest"
+    "test": "jest",
+    "test:w": "jest --watch"
   },
   "prisma": {
     "seed": "ts-node prisma/seed.ts"
