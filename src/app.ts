@@ -38,9 +38,6 @@ app.set("views", "./src/views");
 app.use(layouts);
 app.use("/public", express.static("src/public"));
 app.use("/", router);
-app.listen(PORT, () => {
-  console.log(`server start. http://localhost:${PORT}`);
-});
 
 const textEventHandler = async (
   event: WebhookEvent
@@ -121,3 +118,5 @@ app.post(
     return res.status(200);
   }
 );
+
+export default app;
