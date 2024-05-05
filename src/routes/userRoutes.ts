@@ -1,8 +1,8 @@
-import Express from 'express'
-import usersController from '../controllers/usersController'
+import Express from "express";
+import usersController from "../controllers/usersController";
 
-const router = Express.Router()
+const router = Express.Router();
 
-router.get('/', usersController.index)
+router.get("/", usersController.index);
 
-export default router
+export default router;
