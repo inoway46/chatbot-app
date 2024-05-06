@@ -11,8 +11,15 @@
       <tr>
         <td>
           <%= user.name %>
+          <a class="message-link" href="users/<%= user.id %>/messages">メッセージ一覧</a>
         </td>
       </tr>
     <% }) %>
   </tbody>
 </table>
+
+<style>
+  .message-link {
+    margin-left: 20px;
+  }
+</style>
