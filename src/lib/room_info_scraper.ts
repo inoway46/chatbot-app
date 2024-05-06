@@ -7,6 +7,8 @@ const fetchRoomInfo = async (url: string) => {
     throw new Error("Invalid URL");
   }
 
+  console.log("fetching room info from url")
+
   const browser = await puppeteer.launch();
   const page = await browser.newPage();
   await page.goto(url);
@@ -24,11 +26,14 @@ const fetchRoomInfo = async (url: string) => {
   return roomInfo;
 };
 
-const createRoomInfoMessage = (url: string) => {
-  fetchRoomInfo(url).then((roomInfo) => {
+const createRoomInfoMessage = async (url: string): Promise<string> => {
+  try {
+    const roomInfo = await fetchRoomInfo(url);
     const message = `賃料${roomInfo.rent}で間取り${roomInfo.layout}の物件がありました`;
     return message;
-  });
+  } catch (error) {
+    throw error;
+  }
 };
 
 export default createRoomInfoMessage;

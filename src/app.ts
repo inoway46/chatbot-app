@@ -16,6 +16,7 @@ const env = load({
   PORT: Number,
 });
 import { PrismaClient, User } from "@prisma/client";
+import bodyParser from "body-parser";
 
 const clientConfig: ClientConfig = {
   channelAccessToken: env.CHANNEL_ACCESS_TOKEN || "",
@@ -31,6 +32,8 @@ const prisma = new PrismaClient();
 
 const app: Application = express();
 
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
 app.set("view engine", "ejs");
 app.set("views", "./src/views");
 app.use(layouts);
