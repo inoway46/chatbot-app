@@ -17,8 +17,6 @@ const env = load({
 });
 import { PrismaClient, User } from "@prisma/client";
 
-const PORT = env.PORT || 3000;
-
 const clientConfig: ClientConfig = {
   channelAccessToken: env.CHANNEL_ACCESS_TOKEN || "",
 };
