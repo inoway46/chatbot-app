@@ -8,4 +8,16 @@ export default {
     const users = await prisma.user.findMany();
     res.render("users/index", { users });
   },
+
+  getUserMessages: async (req: Request, res: Response) => {
+    const { id } = req.params;
+    const user = await prisma.user.findUnique({
+      where: { id: Number(id) },
+      include: { messages: true },
+    });
+    res.render("users/messages", {
+      userName: user?.name,
+      messages: user?.messages,
+    });
+  },
 };
