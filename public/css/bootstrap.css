@@ -1,4 +1,5 @@
 @charset "UTF-8";
+@import url("messages.css");
 /*!
  * Bootstrap  v5.3.3 (https://getbootstrap.com/)
  * Copyright 2011-2024 The Bootstrap Authors
@@ -12728,21 +12729,6 @@ fieldset:disabled .btn {
     background-color 0.15s ease-in-out,
     border-color 0.15s ease-in-out,
     box-shadow 0.15s ease-in-out;
-}
-
-.messages-container {
-  margin: 10px;
-  padding: 10px;
-  border: 1px solid #ccc;
-  width: 50%;
-}
-
-.user-message {
-  text-align: left;
-}
-
-.admin-message {
-  text-align: right;
 }
 
 /*# sourceMappingURL=bootstrap.css.map */

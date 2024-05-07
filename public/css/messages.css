@@ -1,0 +1,45 @@
+.room-info-form {
+  display: flex;
+  flex-direction: column;
+  margin: 10px;
+  padding: 10px;
+  width: 50%;
+}
+
+.input-button-container {
+  display: flex;
+}
+
+.room-info-button {
+  margin-left: 10px;
+}
+
+.room-info-error {
+  color: red;
+}
+
+.send-message-form {
+  display: flex;
+  margin: 10px;
+  padding: 10px;
+  width: 50%;
+}
+
+.send-message-button {
+  margin-left: 10px;
+}
+
+.messages-container {
+  margin: 10px;
+  padding: 10px;
+  border: 1px solid #ccc;
+  width: 50%;
+}
+
+.user-message {
+  text-align: left;
+}
+
+.admin-message {
+  text-align: right;
+}
