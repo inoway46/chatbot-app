@@ -1,13 +1,19 @@
 <h2><%= userName %>のメッセージ一覧</h2>
 
-<input v-model="url" type="text" placeholder="suumoのURLを貼り付けてください" />
-<button @click="fetchRoomInfo">取得</button>
-<div v-if="errorMessage">
-  <span>{{ errorMessage }}</span>
+<div class="room-info-form">
+  <div class="input-button-container">
+    <input v-model="url" type="text" placeholder="suumoのURLを貼り付けてください" />
+    <button @click="fetchRoomInfo" class="room-info-button">取得</button>
+  </div>
+  <div v-if="errorMessage" class="room-info-error">
+    <span>{{ errorMessage }}</span>
+  </div>
 </div>
 
-<input v-model="roomInfoMessage" type="text" placeholder="LINEにメッセージ送信" />
-<button id="send">送信</button>
+<div class="send-message-form">
+  <textarea v-model="roomInfoMessage" type="text" placeholder="LINEにメッセージ送信"></textarea>
+  <button id="send" class="send-message-button">送信</button>
+</div>
 
 <% messages.forEach(message => { %>
   <div class="messages-container">
