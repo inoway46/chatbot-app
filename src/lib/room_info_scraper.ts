@@ -7,7 +7,7 @@ const fetchRoomInfo = async (url: string) => {
     throw new Error("Invalid URL");
   }
 
-  console.log("fetching room info from url")
+  console.log("fetching room info from url");
 
   const browser = await puppeteer.launch();
   const page = await browser.newPage();
@@ -15,7 +15,7 @@ const fetchRoomInfo = async (url: string) => {
 
   const roomInfo = await page.evaluate(() => {
     const rent = document.querySelector(
-      ".property_view_note-emphasis"
+      ".property_view_note-emphasis",
     )?.textContent;
     const layout = document.querySelectorAll(".property_view_table-body")[2]
       ?.textContent;

@@ -41,7 +41,7 @@ app.use("/public", express.static("public"));
 app.use("/", router);
 
 const textEventHandler = async (
-  event: WebhookEvent
+  event: WebhookEvent,
 ): Promise<MessageAPIResponseBase | undefined> => {
   if (event.type !== "message" || event.message.type !== "text") {
     return;
@@ -88,7 +88,7 @@ const createUser = async (lineId: string): Promise<User> => {
 const createMessage = async (
   userId: number,
   text: string,
-  isFromUser: boolean
+  isFromUser: boolean,
 ): Promise<void> => {
   await prisma.message.create({
     data: {
@@ -114,10 +114,10 @@ app.post(
           }
           return res.status(500);
         }
-      })
+      }),
     );
     return res.status(200);
-  }
+  },
 );
 
 export default app;

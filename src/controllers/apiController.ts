@@ -5,8 +5,8 @@ export default {
   getRoomInfo: async (req: Request, res: Response) => {
     const roomUrl = req.body.url;
     try {
-      const message = await createRoomInfoMessage(roomUrl)
-      console.log(message)
+      const message = await createRoomInfoMessage(roomUrl);
+      console.log(message);
       res.json({
         type: "text",
         message: message,
