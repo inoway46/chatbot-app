@@ -2,7 +2,7 @@ const app = new Vue({
   el: "#app",
   data: {
     url: "",
-    roomInfoMessage: "",
+    newMessage: "",
     roomInfoError: "",
   },
   methods: {
@@ -15,9 +15,8 @@ const app = new Vue({
         return;
       }
       this.roomInfoError = "";
-      this.roomInfoMessage = response.data.message;
+      this.newMessage = response.data.message;
     },
-
   },
   watch: {
     url() {
