@@ -3,7 +3,7 @@ const app = new Vue({
   data: {
     url: "",
     roomInfoMessage: "",
-    errorMessage: "",
+    roomInfoError: "",
   },
   methods: {
     async fetchRoomInfo() {
@@ -11,17 +11,18 @@ const app = new Vue({
         url: this.url,
       });
       if (response.data.error_message !== undefined) {
-        this.errorMessage = response.data.error_message;
+        this.roomInfoError = response.data.error_message;
         return;
       }
-      this.errorMessage = "";
+      this.roomInfoError = "";
       this.roomInfoMessage = response.data.message;
     },
+
   },
   watch: {
     url() {
       if (this.url.includes("https://suumo.jp/chintai/")) {
-        this.errorMessage = "";
+        this.roomInfoError = "";
       }
     },
   },
