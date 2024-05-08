@@ -27,13 +27,9 @@ const fetchRoomInfo = async (url: string) => {
 };
 
 const createRoomInfoMessage = async (url: string): Promise<string> => {
-  try {
-    const roomInfo = await fetchRoomInfo(url);
-    const message = `賃料${roomInfo.rent}で間取り${roomInfo.layout}の物件がありました。詳細はこちら→${url}`;
-    return message;
-  } catch (error) {
-    throw error;
-  }
+  const roomInfo = await fetchRoomInfo(url);
+  const message = `賃料${roomInfo.rent}で間取り${roomInfo.layout}の物件がありました。詳細はこちら→${url}`;
+  return message;
 };
 
 export default createRoomInfoMessage;
