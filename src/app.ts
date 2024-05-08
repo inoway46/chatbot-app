@@ -27,8 +27,8 @@ const middlewareConfig: MiddlewareConfig = {
   channelSecret: env.CHANNEL_SECRET || "",
 };
 
-const client = new messagingApi.MessagingApiClient(clientConfig);
-const prisma = new PrismaClient();
+export const client = new messagingApi.MessagingApiClient(clientConfig);
+export const prisma = new PrismaClient();
 
 const app: Application = express();
 
