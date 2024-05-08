@@ -26,7 +26,9 @@ export default {
     const { message } = req.body;
     if (!message || message === "") {
       const errorMessage = "メッセージを入力してください";
-      res.redirect(`/users/${id}/messages?error_message=${encodeURIComponent(errorMessage)}`);
+      res.redirect(
+        `/users/${id}/messages?error_message=${encodeURIComponent(errorMessage)}`,
+      );
       return;
     }
     const user = await prisma.user.findUnique({
@@ -34,17 +36,23 @@ export default {
     });
     if (!user?.lineId) {
       const errorMessage = "LINE未連携のため送信できません";
-      res.redirect(`/users/${id}/messages?error_message=${encodeURIComponent(errorMessage)}`);
+      res.redirect(
+        `/users/${id}/messages?error_message=${encodeURIComponent(errorMessage)}`,
+      );
       return;
     }
-    await client.pushMessage({
-      to: user?.lineId,
-      messages: [{ type: "text", text: message }],
-    }).catch(() => {
-      const errorMessage = "送信に失敗しました";
-      res.redirect(`/users/${id}/messages?error_message=${encodeURIComponent(errorMessage)}`);
-      return;
-    });
+    await client
+      .pushMessage({
+        to: user?.lineId,
+        messages: [{ type: "text", text: message }],
+      })
+      .catch(() => {
+        const errorMessage = "送信に失敗しました";
+        res.redirect(
+          `/users/${id}/messages?error_message=${encodeURIComponent(errorMessage)}`,
+        );
+        return;
+      });
     await prisma.message.create({
       data: {
         userId: Number(id),
