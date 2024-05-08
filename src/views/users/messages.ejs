@@ -13,9 +13,16 @@
     </div>
 
     <div class="send-message-form">
-      <textarea v-model="newMessage" type="text" placeholder="LINEにメッセージ送信"></textarea>
-      <button class="send-message-button">送信</button>
+      <form action="/users/<%= userId %>/messages" method="post">
+        <textarea v-model="newMessage" name="message" type="text" placeholder="LINEにメッセージ送信"></textarea>
+        <button type="submit" class="send-message-button">送信</button>
+      </form>
     </div>
+    <% if (errorMessage) { %>
+      <div class="error-message">
+        <span><%= errorMessage %></span>
+      </div>
+    <% } %>
   </div>
 
   <% messages.forEach(message => { %>
