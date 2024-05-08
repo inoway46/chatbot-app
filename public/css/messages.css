@@ -1,11 +1,26 @@
-.messages-are {
+.messages-area {
   display: flex;
   justify-content: center;
   align-items: center;
+  flex-direction: column;
+  width: 100%;
 }
 
 .form-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
   width: 100%;
+}
+
+.url-input {
+  width: 300px;
+}
+
+.message-input {
+  width: 300px;
+  height: 300px;
 }
 
 .room-info-form {
@@ -46,10 +61,6 @@
   width: 70%;
 }
 
-.user-message {
-  text-align: left;
-}
-
 .admin-message {
-  text-align: right;
+  color: gray;
 }
