@@ -1,0 +1,66 @@
+.messages-area {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  width: 100%;
+}
+
+.form-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  width: 100%;
+}
+
+.url-input {
+  width: 300px;
+}
+
+.message-input {
+  width: 300px;
+  height: 300px;
+}
+
+.room-info-form {
+  display: flex;
+  flex-direction: column;
+  padding: 10px;
+}
+
+.input-button-container {
+  display: flex;
+}
+
+.room-info-button {
+  margin-left: 10px;
+}
+
+.room-info-error {
+  color: red;
+}
+
+.send-message-form {
+  display: flex;
+  padding: 10px;
+}
+
+.send-message-button {
+  margin-left: 10px;
+}
+
+.error-message {
+  color: red;
+}
+
+.messages-container {
+  margin: 10px;
+  padding: 10px;
+  border: 1px solid #ccc;
+  width: 70%;
+}
+
+.admin-message {
+  color: gray;
+}

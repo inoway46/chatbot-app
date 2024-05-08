@@ -1,27 +1,37 @@
-<h2>メッセージ一覧</h2>
-<% messages.forEach(message => { %>
-  <div class="messages-container">
-    <% if (message.isFromUser) { %>
-      <p class="user-message"><%= userName %>: <%= message.content %></p>
-    <% } else { %>
-      <p class="admin-message"><%= message.content %></p>
+<h2><%= userName %>のメッセージ一覧</h2>
+
+<div class="messages-area">
+  <div class="form-container">
+    <div class="room-info-form">
+      <div class="input-button-container">
+        <input v-model="url" type="text" placeholder="suumoのURLを貼り付けてください" class="url-input" />
+        <button @click="fetchRoomInfo" class="room-info-button">取得</button>
+      </div>
+      <div v-if="roomInfoError" class="room-info-error">
+        <span>{{ roomInfoError }}</span>
+      </div>
+    </div>
+
+    <div class="send-message-form">
+      <form action="/users/<%= userId %>/messages" method="post">
+        <textarea v-model="newMessage" name="message" type="text" placeholder="LINEにメッセージ送信" class="message-input"></textarea>
+        <button type="submit" class="send-message-button">送信</button>
+      </form>
+    </div>
+    <% if (errorMessage) { %>
+      <div class="error-message">
+        <span><%= errorMessage %></span>
+      </div>
     <% } %>
   </div>
-<% }) %>
 
-<style>
-  .messages-container {
-    margin: 10px;
-    padding: 10px;
-    border: 1px solid #ccc;
-    width: 50%;
-  }
-
-  .user-message {
-    text-align: left;
-  }
-
-  .admin-message {
-    text-align: right;
-  }
-</style>
+  <% messages.forEach(message => { %>
+    <div class="messages-container">
+      <% if (message.isFromUser) { %>
+        <p><%= userName %>: <%= message.content %></p>
+      <% } else { %>
+        <p class="admin-message">管理: <%= message.content %></p>
+      <% } %>
+    </div>
+  <% }) %>
+</div>

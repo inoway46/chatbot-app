@@ -16,6 +16,7 @@ const env = load({
   PORT: Number,
 });
 import { PrismaClient, User } from "@prisma/client";
+import bodyParser from "body-parser";
 
 const clientConfig: ClientConfig = {
   channelAccessToken: env.CHANNEL_ACCESS_TOKEN || "",
@@ -26,19 +27,21 @@ const middlewareConfig: MiddlewareConfig = {
   channelSecret: env.CHANNEL_SECRET || "",
 };
 
-const client = new messagingApi.MessagingApiClient(clientConfig);
-const prisma = new PrismaClient();
+export const client = new messagingApi.MessagingApiClient(clientConfig);
+export const prisma = new PrismaClient();
 
 const app: Application = express();
 
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
 app.set("view engine", "ejs");
 app.set("views", "./src/views");
 app.use(layouts);
-app.use("/public", express.static("src/public"));
+app.use("/public", express.static("public"));
 app.use("/", router);
 
 const textEventHandler = async (
-  event: WebhookEvent
+  event: WebhookEvent,
 ): Promise<MessageAPIResponseBase | undefined> => {
   if (event.type !== "message" || event.message.type !== "text") {
     return;
@@ -85,7 +88,7 @@ const createUser = async (lineId: string): Promise<User> => {
 const createMessage = async (
   userId: number,
   text: string,
-  isFromUser: boolean
+  isFromUser: boolean,
 ): Promise<void> => {
   await prisma.message.create({
     data: {
@@ -111,10 +114,10 @@ app.post(
           }
           return res.status(500);
         }
-      })
+      }),
     );
     return res.status(200);
-  }
+  },
 );
 
 export default app;
