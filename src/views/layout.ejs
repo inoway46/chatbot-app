@@ -10,26 +10,26 @@
     <link rel="stylesheet" href="/public/css/bootstrap.css" />
   </head>
 
-  <body>
-    <header>
-      <div id="nav">
-        <div class="col-sm nav-align">
-          <h1 id="title">お部屋探し管理</h1>
+  <body class="d-flex flex-column min-vh-100">
+    <header class="mb-4">
+      <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <a class="navbar-brand" href="/">お部屋探し管理</a>
+        <div class="collapse navbar-collapse">
+          <ul class="navbar-nav ml-auto">
+            <li class="nav-item">
+              <a class="nav-link" href="/">Home</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/users">ユーザー一覧</a>
+            </li>
+          </ul>
         </div>
-        <div class="col-sm nav-align">
-          <a href="/">
-            <span class="button">Home</span>
-          </a>
-          <a href="/users">
-            <span class="button">ユーザー一覧</span>
-          </a>
-        </div>
-      </div>
+      </nav>
     </header>
 
-    <div class="container" id="app"><%- body %></div>
+    <main class="container flex-grow-1" id="app"><%- body %></main>
 
-    <footer>©️お部屋探しサービス</footer>
+    <footer class="mt-auto py-3 bg-light text-center">©️お部屋探しサービス</footer>
 
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
