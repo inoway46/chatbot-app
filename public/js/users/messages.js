@@ -1,7 +1,7 @@
 const app = new Vue({
   el: "#app",
   data: {
-    url: "",
+    url: "https://suumo.jp/chintai/jnc_000090434455/?bc=100379768366",
     newMessage: "",
     roomInfoError: "",
   },
