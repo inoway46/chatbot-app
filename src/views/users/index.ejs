@@ -1,25 +1,19 @@
 <h2>ユーザー一覧</h2>
-<table class="table">
-  <thead>
+<table class="table table-striped">
+  <thead class="thead-dark">
     <tr>
       <th>Name</th>
     </tr>
   </thead>
   <tbody>
-    <img src="public/images/kirin.png" alt="1" width="100" height="100" />
     <% users.forEach(user => { %>
       <tr>
         <td>
           <%= user.name %>
-          <a class="message-link" href="users/<%= user.id %>/messages">メッセージ一覧</a>
+          <a class="btn btn-primary btn-sm ml-2" href="users/<%= user.id %>/messages">メッセージ一覧</a>
+          <a class="btn btn-secondary btn-sm ml-2" href="users/<%= user.id %>/condition">希望条件</a>
         </td>
       </tr>
     <% }) %>
   </tbody>
 </table>
-
-<style>
-  .message-link {
-    margin-left: 20px;
-  }
-</style>
