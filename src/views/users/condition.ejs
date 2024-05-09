@@ -1,0 +1,50 @@
+<div class="container">
+  <h2 class="my-3"><%= userName %>の希望条件</h2>
+  <% if (condition) { %>
+      <p class="my-1">賃料: <%= condition.rent %> 円以上</p>
+      <p class="my-1">平米数: <%= condition.squareMeters %> 平米以上</p>
+      <p class="my-1">間取り:</p>
+      <ul class="list-group mb-3">
+        <% condition.layouts.map(layout => { %>
+          <li class="list-group-item"><%= layout.name %></li>
+        <% }) %>
+      </ul>
+      <p class="my-1">都道府県: <%= condition.location %></p>
+  <% } else { %>
+      <p class="my-1">希望条件が登録されていません。</p>
+  <% } %>
+
+  <h3 class="my-3">希望条件を登録</h3>
+  <form action="/users/<%= userId %>/condition" method="POST" class="mb-3">
+    <div class="form-group">
+      <label for="rent">賃料:</label>
+      <input type="number" id="rent" name="rent" min="0" required class="form-control" value="<%= condition ? condition.rent : '' %>">円以上<br>
+    </div>
+
+    <div class="form-group">
+      <label for="squareMeters">平米数:</label>
+      <input type="number" id="squareMeters" name="squareMeters" min="0" required class="form-control" value="<%= condition ? condition.squareMeters : '' %>">平米以上<br>
+    </div>
+
+    <div class="form-group">
+      <label for="layouts">間取り:</label><br>
+      <% LAYOUTS.map((layout, index) => { %>
+        <div class="form-check">
+          <input type="checkbox" id="layout<%= index %>" name="layouts" value="<%= layout %>" class="form-check-input" <%= condition && condition.layouts.some(l => l.name === layout) ? 'checked' : '' %>>
+          <label for="layout<%= index %>" class="form-check-label"><%= layout %></label><br>
+        </div>
+      <% }) %>
+    </div>
+
+    <div class="form-group">
+      <label for="location">都道府県:</label>
+      <select id="location" name="location" required class="form-control">
+        <% PREFECTURES.map((prefecture) => { %>
+          <option value="<%= prefecture %>" <%= condition && condition.location === prefecture ? 'selected' : '' %>><%= prefecture %></option>
+        <% }) %>
+      </select><br>
+    </div>
+
+    <input type="submit" value="登録" class="btn btn-primary">
+  </form>
+</div>
