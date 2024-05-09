@@ -18,3 +18,9 @@ describe("GET /users/1/messages", () => {
     request(app).get("/users/1/messages").expect(200, done);
   });
 });
+
+describe("GET /users/1/condition", () => {
+  it("should return 200 OK", (done) => {
+    request(app).get("/users/1/condition").expect(200, done);
+  });
+});

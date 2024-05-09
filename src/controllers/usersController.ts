@@ -63,4 +63,18 @@ export default {
     });
     res.redirect(`/users/${id}/messages`);
   },
+
+  getUserCondition: async (req: Request, res: Response) => {
+    const { id } = req.params;
+    const user = await prisma.user.findUnique({
+      where: { id: Number(id) },
+      include: { condition: true },
+    });
+
+    res.render("users/condition", {
+      userId: id,
+      userName: user?.name,
+      condition: user?.condition,
+    });
+  }
 };
