@@ -1,4 +1,5 @@
-import { client, prisma } from "../app";
+import { prisma } from "../app";
+import { client } from "../controllers/lineController";
 import { Request, Response } from "express";
 
 export default {
