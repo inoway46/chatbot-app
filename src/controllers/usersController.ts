@@ -76,5 +76,5 @@ export default {
       userName: user?.name,
       condition: user?.condition,
     });
-  }
+  },
 };
