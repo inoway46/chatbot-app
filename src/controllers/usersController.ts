@@ -1,6 +1,7 @@
 import { prisma } from "../app";
 import { client } from "../controllers/lineController";
 import { Request, Response } from "express";
+import { LAYOUTS, PREFECTURES } from "../lib/condition_constants";
 
 export default {
   index: async (req: Request, res: Response) => {
@@ -62,5 +63,67 @@ export default {
       },
     });
     res.redirect(`/users/${id}/messages`);
+  },
+
+  getUserCondition: async (req: Request, res: Response) => {
+    const { id } = req.params;
+    const user = await prisma.user.findUnique({
+      where: { id: Number(id) },
+      include: {
+        condition: {
+          include: {
+            layouts: true,
+          },
+        },
+      },
+    });
+    console.log(user?.condition?.layouts);
+
+    res.render("users/condition", {
+      userId: id,
+      userName: user?.name,
+      condition: user?.condition,
+      LAYOUTS: LAYOUTS,
+      PREFECTURES: PREFECTURES,
+    });
+  },
+
+  postUserCondition: async (req: Request, res: Response) => {
+    const { id } = req.params;
+    const { rent, squareMeters, layouts, location } = req.body;
+
+    const rentInt = parseInt(rent, 10);
+    const squareMetersInt = parseInt(squareMeters, 10);
+
+    const condition = await prisma.condition.upsert({
+      where: { userId: Number(id) },
+      update: {
+        rent: rentInt,
+        squareMeters: squareMetersInt,
+        location,
+      },
+      create: {
+        rent: rentInt,
+        squareMeters: squareMetersInt,
+        location,
+        userId: Number(id),
+      },
+    });
+
+    await prisma.layout.deleteMany({
+      where: {
+        conditionId: condition.id,
+      },
+    });
+
+    for (const layoutName of layouts) {
+      await prisma.layout.create({
+        data: {
+          conditionId: condition.id,
+          name: layoutName,
+        },
+      });
+    }
+    res.redirect(`/users/${id}/condition`);
   },
 };
