@@ -1,5 +1,5 @@
-import axios from 'axios';
-import { load } from 'cheerio';
+import axios from "axios";
+import { load } from "cheerio";
 
 const URL_FORMAT = "https://suumo.jp/chintai/";
 
