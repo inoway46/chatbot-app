@@ -3,7 +3,8 @@
 1. .env.sampleを.envにリネーム
 2. 環境変数を入れる（LINE DevelopersアカウントとPostgreSQLのセッティング）
 3. `npm install`
-4. `npm run start`
+4. `npx prisma migrate dev`
+5. `npm run start`
 
 ## 機能説明
 
