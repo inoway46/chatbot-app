@@ -1,4 +1,5 @@
-import puppeteer from "puppeteer";
+import axios from 'axios';
+import { load } from 'cheerio';
 
 const URL_FORMAT = "https://suumo.jp/chintai/";
 
@@ -9,21 +10,13 @@ const fetchRoomInfo = async (url: string) => {
 
   console.log("fetching room info from url");
 
-  const browser = await puppeteer.launch({ headless: true });
-  const page = await browser.newPage();
-  await page.goto(url);
+  const response = await axios.get(url);
+  const $ = load(response.data);
 
-  const roomInfo = await page.evaluate(() => {
-    const rent = document.querySelector(
-      ".property_view_note-emphasis",
-    )?.textContent;
-    const layout = document.querySelectorAll(".property_view_table-body")[2]
-      ?.textContent;
-    return { rent, layout };
-  });
+  const rent = $(".property_view_note-emphasis").text();
+  const layout = $(".property_view_table-body").eq(2).text();
 
-  await browser.close();
-  return roomInfo;
+  return { rent, layout };
 };
 
 const createRoomInfoMessage = async (url: string): Promise<string> => {
