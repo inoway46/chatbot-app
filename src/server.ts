@@ -1,5 +1,9 @@
 import app from "./app";
+import { load } from "ts-dotenv";
+const env = load({
+  PORT: Number,
+});
 
-app.listen(3000, () => {
-  console.log("server start. http://localhost:3000");
+app.listen(env.PORT || 3000, () => {
+  console.log("server start.");
 });
